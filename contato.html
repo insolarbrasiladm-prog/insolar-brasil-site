@@ -152,6 +152,29 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:50px 24px 30px;backgro
 .nav.aberto .menu li a{display:block;padding:14px 4px;border-bottom:1px solid rgba(255,255,255,.08);font-size:1.05rem}
 }
 @media(max-width:480px){.nav .logo span{display:none}.btn-wpp{padding:10px 14px !important;font-size:.85rem !important}.btn-menu{padding:9px 10px}}
+
+/* FORMULÁRIO */
+.form-sec{padding:70px 0}
+.form-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:start}
+.form-lead{background:var(--superficie);border:1px solid rgba(249,185,30,.3);border-radius:24px;padding:30px;display:grid;grid-template-columns:1fr 1fr;gap:14px 16px;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.form-lead label{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.9rem;color:#fff}
+.form-lead input[type=text],.form-lead input[type=tel],.form-lead input[type=email],.form-lead select,.form-lead textarea{background:#071634;border:2px solid rgba(255,255,255,.14);border-radius:12px;padding:12px 14px;color:#fff;font-family:inherit;font-size:1rem;outline:none;width:100%}
+.form-lead input:focus,.form-lead select:focus,.form-lead textarea:focus{border-color:#F9B91E}
+.form-lead .arquivo,.form-lead label:has(textarea),.form-lead .aceite,.form-lead button,.form-lead .form-obs{grid-column:1/-1}
+.form-lead .arquivo{background:rgba(249,185,30,.08);border:2px dashed rgba(249,185,30,.5);border-radius:14px;padding:14px}
+.form-lead .arquivo input{color:#C9D6EA;font-family:inherit}
+.form-lead small{color:var(--suave);font-weight:500}
+.form-lead .aceite{flex-direction:row;align-items:flex-start;gap:10px;font-weight:500;color:var(--suave);font-size:.85rem}
+.form-lead .aceite input{margin-top:3px;width:18px;height:18px;flex:0 0 18px}
+.form-lead button{border:0;cursor:pointer;font-size:1.05rem;justify-content:center;width:100%}
+.form-obs{color:var(--suave);font-size:.88rem;text-align:center}.form-obs a{color:#F9B91E;font-weight:700}
+.form-sec .container{padding-left:22px;padding-right:22px}
+.arq-oculto{position:absolute;opacity:0;width:1px;height:1px}
+.arq-botao{display:inline-block;align-self:flex-start;background:#F9B91E;color:#071634;font-weight:800;border-radius:50px;padding:10px 18px;cursor:pointer}
+.arq-nome{color:#C9D6EA;font-weight:500;font-size:.85rem;word-break:break-all}
+.pote{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+@media(max-width:860px){.form-grid{grid-template-columns:1fr}.form-lead{grid-template-columns:1fr;padding:22px}}
+.aviso-erro{grid-column:1/-1;background:rgba(255,80,80,.12);border:1px solid #ff6b6b;color:#ffd6d6;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-weight:600}
 </style>
 </head>
 <body>
@@ -202,7 +225,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:50px 24px 30px;backgro
           <li>📍 <span><b>Atendemos:</b> Ilhéus, Itabuna e sul da Bahia</span></li>
           <li>📞 <span><b>WhatsApp:</b> (73) 3223-5102</span></li>
           <li>✉️ <span><b>E-mail:</b> <a href="mailto:comercial@insolarbrasil.com.br" style="color:inherit">comercial@insolarbrasil.com.br</a></span></li>
-          
+          <li>📝 <span><b>Formulário:</b> <a href="#formulario" style="color:var(--laranja)">mande a sua conta de luz por aqui</a></span></li>
           <li>📷 <span><b>Instagram:</b> @insolarbrasil</span></li>
         </ul>
       </div>
@@ -216,13 +239,41 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:50px 24px 30px;backgro
   </div>
 </section>
 
-<section class="numeros">
-  <div class="container"><div class="grid4n">
-    <div><div class="num">7+</div><div class="lbl">Anos de experiência</div></div>
-    <div><div class="num">R$ 0</div><div class="lbl">Visita técnica</div></div>
-    <div><div class="num">1 dia</div><div class="lbl">Para o orçamento</div></div>
-    <div><div class="num">0%</div><div class="lbl">Compromisso inicial</div></div>
-  </div></div>
+<section class="form-sec" id="formulario">
+  <div class="container">
+    <div class="form-grid">
+      <div class="form-txt">
+        <span class="tag">Orçamento pelo site</span>
+        <h2 class="h2">Mande a sua conta de luz<br>e receba a sua simulação</h2>
+        <p class="sub">Preencha os dados e anexe uma foto da sua conta de energia. A equipe comercial da Insolar entra em contato pelo WhatsApp ou pelo telefone.</p>
+        <ul class="sobre-lista">
+          <li>📸 <span>Pode ser foto tirada do celular ou o arquivo em PDF.</span></li>
+          <li>🔒 <span>Os seus dados são usados só para o seu atendimento.</span></li>
+          <li>🎁 <span>Em novembro, quem fecha ainda escolhe o seu presente da Black.</span></li>
+        </ul>
+      </div>
+      <div id="aviso-erro" class="aviso-erro" hidden></div>
+      <form class="form-lead" action="enviar-contato.php" method="post" enctype="multipart/form-data">
+        <label>Seu nome *<input type="text" name="nome" required maxlength="80" autocomplete="name"></label>
+        <label>WhatsApp *<input type="tel" name="telefone" required maxlength="20" placeholder="(73) 9 0000-0000" autocomplete="tel" inputmode="tel"></label>
+        <label>E-mail<input type="email" name="email" maxlength="100" autocomplete="email"></label>
+        <label>Cidade *<input type="text" name="cidade" required maxlength="60" placeholder="Ex.: Ilhéus"></label>
+        <label>O sistema é para *
+          <select name="tipo" required>
+            <option value="">Escolha</option>
+            <option>Casa</option><option>Comércio</option><option>Empresa ou indústria</option><option>Propriedade rural</option><option>Já tenho energia solar (baterias, limpeza ou serviço)</option>
+          </select>
+        </label>
+        <label>Valor médio da conta de luz (R$)<input type="text" name="valor" maxlength="12" inputmode="numeric" placeholder="Ex.: 450"></label>
+        <label class="arquivo">📎 Foto ou PDF da conta de luz<input type="file" name="conta" id="conta" accept="image/*,application/pdf" class="arq-oculto"><span class="arq-botao">📷 Escolher foto ou arquivo</span><span class="arq-nome" id="arq-nome">Nenhum arquivo escolhido · até 8 MB</span></label>
+        <label>Mensagem<textarea name="mensagem" rows="3" maxlength="800" placeholder="Conte o que você precisa (opcional)"></textarea></label>
+        <input type="text" name="site_web" class="pote" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <label class="aceite"><input type="checkbox" name="aceite" value="sim" required> Autorizo a Insolar Brasil a usar estes dados para entrar em contato comigo sobre o meu orçamento.</label>
+        <button class="btn-primary" type="submit">☀️ Quero a minha simulação</button>
+        <p class="form-obs">Prefere falar agora? <a href="https://wa.me/557332235102?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20Insolar." target="_blank">Chame no WhatsApp (73) 3223-5102</a></p>
+      </form>
+    </div>
+  </div>
 </section>
 
 <section class="numeros">
@@ -237,7 +288,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:50px 24px 30px;backgro
 <section>
   <div class="container">
     <div class="cta-final">
-      <h2>Pronto para parar de pagar caro?</h2>
+      <h2>Sua casa pode ser a próxima</h2>
       <p>Fale com a Insolar agora pelo WhatsApp.</p>
       <a class="btn-dark" href="https://wa.me/557332235102?text=Ol%C3%A1!%20Quero%20falar%20com%20a%20Insolar" target="_blank">💬 Chamar no WhatsApp</a>
     </div>
@@ -280,5 +331,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:50px 24px 30px;backgro
 </a>
 <script>(function(){var a=new Date();document.querySelectorAll('[data-fim]').forEach(function(e){if(a>new Date(e.getAttribute('data-fim')))e.remove();});})();</script>
 <script>(function(){var b=document.querySelector('.btn-menu'),n=document.querySelector('.nav');if(!b||!n)return;b.addEventListener('click',function(){var a=n.classList.toggle('aberto');b.setAttribute('aria-expanded',a);b.textContent=a?'✕ Fechar':'☰ Menu';});n.querySelectorAll('.menu a').forEach(function(l){l.addEventListener('click',function(){n.classList.remove('aberto');b.textContent='☰ Menu';});});})();</script>
+<script>(function(){var p=new URLSearchParams(location.search).get('erro');if(p){var a=document.getElementById('aviso-erro');a.textContent='⚠️ '+p;a.hidden=false;}
+var ci=document.getElementById('conta');if(ci)ci.addEventListener('change',function(){var n=ci.files[0];document.getElementById('arq-nome').textContent=n?('✅ '+n.name+(n.size>8388608?' — arquivo grande demais (máx. 8 MB)':'')):'Nenhum arquivo escolhido · até 8 MB';});var f=document.querySelector('.form-lead');if(f)f.addEventListener('submit',function(){var b=f.querySelector('button[type=submit]');b.disabled=true;b.textContent='Enviando…';});})();</script>
 </body>
 </html>
