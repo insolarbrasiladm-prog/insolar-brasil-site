@@ -1,0 +1,31 @@
+# Insolar Brasil — buscadores e assistentes de IA são bem-vindos
+User-agent: *
+Allow: /
+Disallow: /enviar-contato.php
+Disallow: /obrigado.html
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://insolarbrasil.com.br/sitemap.xml
