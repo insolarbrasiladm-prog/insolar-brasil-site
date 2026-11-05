@@ -7,7 +7,7 @@
  */
 
 date_default_timezone_set('America/Bahia');
-$PARA      = 'comercial@insolarbrasil.com.br';
+$PARA      = 'comercial@insolarbrasil.com.br, insolarbrasil.adm@gmail.com';
 $REMETENTE = 'site@insolarbrasil.com.br';
 $PASTA     = dirname(__DIR__) . '/contatos-site';
 $LIMITE_MB = 8;
