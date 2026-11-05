@@ -216,6 +216,14 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:50px 24px 30px;backgro
 .cta-robo img{width:100%;max-height:340px;object-fit:cover;object-position:top;border-radius:20px}
 .promo .container{padding-left:22px;padding-right:22px}
 @media(max-width:860px){.promo{padding:56px 0}.promo-topo{grid-template-columns:1fr}.promo-robo{order:-1;max-width:260px;margin:0 auto}.promo-robo img{max-height:380px}.cta-robo{grid-template-columns:1fr;text-align:center}.cta-robo img{max-width:220px;margin:0 auto}}
+
+/* MENU NO CELULAR E TABLET */
+.btn-menu{display:none;white-space:nowrap;background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:12px;padding:9px 12px;font-family:inherit;font-weight:800;font-size:.95rem;cursor:pointer;margin-left:8px}
+@media(max-width:960px){.btn-menu{display:inline-block}
+.nav.aberto .menu{display:flex !important;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#071634;padding:6px 24px 18px;gap:0;border-bottom:2px solid #F9B91E;box-shadow:0 20px 40px rgba(0,0,0,.5);z-index:60;list-style:none;margin:0}
+.nav.aberto .menu li a{display:block;padding:14px 4px;border-bottom:1px solid rgba(255,255,255,.08);font-size:1.05rem}
+}
+@media(max-width:480px){.nav .logo span{display:none}.btn-wpp{padding:10px 14px !important;font-size:.85rem !important}.btn-menu{padding:9px 10px}}
 </style>
 </head>
 <body>
@@ -233,6 +241,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:50px 24px 30px;backgro
     <li><a href="contato.html">Contato</a></li>
   </ul>
   <a class="btn-wpp" href="https://wa.me/557332235102?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20energia%20solar%20da%20Insolar%20Brasil" target="_blank">💬 WhatsApp</a>
+  <button class="btn-menu" aria-label="Abrir menu" aria-expanded="false">☰ Menu</button>
 </nav></header>
 
 <section class="banner" aria-roledescription="carrossel" aria-label="Destaques Insolar Brasil">
@@ -546,5 +555,6 @@ if(!o){i.classList.add('open');r.style.maxHeight=r.scrollHeight+'px'}}
   });
 })();
 </script>
+<script>(function(){var b=document.querySelector('.btn-menu'),n=document.querySelector('.nav');if(!b||!n)return;b.addEventListener('click',function(){var a=n.classList.toggle('aberto');b.setAttribute('aria-expanded',a);b.textContent=a?'✕ Fechar':'☰ Menu';});n.querySelectorAll('.menu a').forEach(function(l){l.addEventListener('click',function(){n.classList.remove('aberto');b.textContent='☰ Menu';});});})();</script>
 </body>
 </html>
