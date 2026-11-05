@@ -1,5 +1,7 @@
 # Site Insolar Brasil - 04/11/2026
 RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.insolarbrasil\.com\.br$ [NC]
+RewriteRule ^ https://insolarbrasil.com.br%{REQUEST_URI} [L,R=301]
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 <IfModule mod_expires.c>
