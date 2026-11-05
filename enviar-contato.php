@@ -12,6 +12,29 @@ $REMETENTE = 'site@insolarbrasil.com.br';
 $PASTA     = dirname(__DIR__) . '/contatos-site';
 $LIMITE_MB = 8;
 
+
+// A hospedagem desliga a função mail() do PHP; o envio é feito direto pelo
+// servidor de e-mail da própria hospedagem (localhost, porta 25).
+function enviar_smtp($de, array $para, $cabecalhos, $corpo) {
+    $s = @stream_socket_client('tcp://localhost:25', $en, $es, 10);
+    if (!$s) return false;
+    stream_set_timeout($s, 15);
+    $ler = function () use ($s) { $r = ''; while (($l = fgets($s, 1000)) !== false) { $r .= $l; if (isset($l[3]) && $l[3] === ' ') break; } return $r; };
+    $cmd = function ($c) use ($s, $ler) { fwrite($s, $c . "\r\n"); return $ler(); };
+    $ok = function ($r, $cod) { return strncmp($r, $cod, 3) === 0; };
+    if (!$ok($ler(), '220')) { fclose($s); return false; }
+    $cmd('EHLO insolarbrasil.com.br');
+    if (!$ok($cmd("MAIL FROM:<$de>"), '250')) { fclose($s); return false; }
+    $aceitos = 0;
+    foreach ($para as $p) { if ($ok($cmd('RCPT TO:<' . trim($p) . '>'), '250')) $aceitos++; }
+    if (!$aceitos || !$ok($cmd('DATA'), '354')) { fclose($s); return false; }
+    $msg = $cabecalhos . "\r\n" . preg_replace('/^\./m', '..', str_replace(["\r\n", "\n"], ["\n", "\r\n"], $corpo));
+    $fim = $cmd($msg . "\r\n.");
+    $cmd('QUIT');
+    fclose($s);
+    return $ok($fim, '250');
+}
+
 function voltar_erro($msg) {
     $m = rawurlencode($msg);
     header("Location: contato.html?erro=$m#formulario", true, 303);
@@ -103,7 +126,11 @@ if ($anexo) {
 }
 $corpo .= "--$sep--\r\n";
 
-@mail($PARA, $assunto, $corpo, $cab, '-f' . $REMETENTE);
+$destinos = array_map('trim', explode(',', $PARA));
+$cabTudo  = "To: " . implode(', ', $destinos) . "\r\nSubject: $assunto\r\nDate: " . date('r') . "\r\nMessage-ID: <" . md5(uniqid('', true)) . "@insolarbrasil.com.br>\r\n" . $cab;
+$enviado = false;
+try { $enviado = enviar_smtp($REMETENTE, $destinos, $cabTudo, $corpo); } catch (Throwable $e) { $enviado = false; }
+if (!$enviado) @file_put_contents($PASTA . '/falhas-de-envio.txt', "$quando - $nome - $telefone\n", FILE_APPEND);
 
 $primeiro = rawurlencode(strtok($nome, ' '));
 header("Location: obrigado.html?n=$primeiro", true, 303);
