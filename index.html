@@ -402,6 +402,8 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:50px 24px 30px;backgro
     <div class="sim-box">
       <label for="gasto">💰 Qual seu gasto mensal com energia?</label>
       <input type="text" id="gasto" inputmode="numeric" placeholder="Ex: 800" oninput="simular()">
+      <label for="cidade">📍 Em qual cidade fica o imóvel?</label>
+      <input type="text" id="cidade" placeholder="Ex: Ilhéus" autocomplete="address-level2" oninput="simular()">
       <button class="btn-simular" onclick="simular()">Calcular meu sistema</button>
       <div class="sim-res" id="resultado">
         <div class="sim-grid">
@@ -410,7 +412,8 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:50px 24px 30px;backgro
           <div class="sim-item"><div class="v" id="r-kit">—</div><div class="l">Potência do sistema</div></div>
         </div>
         <p class="sim-nota">*Estimativa para Ilhéus e região. O retorno do investimento é, em média, de 3 a 5 anos, e depois são mais de 20 anos de energia praticamente gratuita. Valores exatos só depois da análise técnica.</p>
-        <div class="sim-cta"><a class="btn-primary" href="https://wa.me/557332235102?text=Ol%C3%A1!%20Simulei%20no%20site%20e%20quero%20meu%20or%C3%A7amento%20exato" target="_blank">Quero meu orçamento exato →</a></div>
+        <div class="sim-cta"><a class="btn-primary" id="sim-wpp" href="https://wa.me/557332235102?text=Ol%C3%A1!%20Simulei%20no%20site%20e%20quero%20meu%20or%C3%A7amento%20exato" target="_blank" onclick="simular()">Enviar minha simulação no WhatsApp →</a>
+          <p class="sim-nota" style="margin-top:12px">Os seus números já vão na mensagem. Depois é só mandar a foto da conta de luz.</p></div>
       </div>
     </div>
   </div>
@@ -419,11 +422,21 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:50px 24px 30px;backgro
 function simular(){
   var raw=document.getElementById('gasto').value.replace(/\D/g,'');
   if(!raw){document.getElementById('resultado').classList.remove('show');return}
-  var g=parseFloat(raw),kwh=g/0.95,p=Math.max(1,Math.ceil(kwh/117/0.62));
+  var g=parseFloat(raw),kwh=g/0.95,p=Math.max(1,Math.ceil(kwh/120/0.62));
+  var kwp=(p*0.62).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+  var area=Math.round(p*2.8).toLocaleString('pt-BR');
   document.getElementById('r-mes').textContent=p+' placas';
-  document.getElementById('r-ano').textContent=Math.round(p*2.8).toLocaleString('pt-BR')+' m²';
-  document.getElementById('r-kit').textContent=(p*0.62).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+' kWp';
+  document.getElementById('r-ano').textContent=area+' m²';
+  document.getElementById('r-kit').textContent=kwp+' kWp';
   document.getElementById('resultado').classList.add('show');
+  var cid=(document.getElementById('cidade').value||'').trim().slice(0,60);
+  var msg='Olá! Fiz a simulação no site da Insolar:\n'+
+    '• Conta de luz: R$ '+g.toLocaleString('pt-BR')+' por mês\n'+
+    '• Cidade: '+(cid||'(vou informar)')+'\n'+
+    '• Sistema estimado: '+p+' placas de 620 W ('+kwp+' kWp)\n'+
+    '• Área no telhado: cerca de '+area+' m²\n'+
+    'Quero meu orçamento exato. Vou mandar a foto da conta de luz.';
+  document.getElementById('sim-wpp').href='https://wa.me/557332235102?text='+encodeURIComponent(msg);
 }
 </script>
 
