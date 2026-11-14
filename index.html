@@ -239,6 +239,12 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:50px 24px 30px;backgro
 .nav.aberto .menu li a{display:block;padding:14px 4px;border-bottom:1px solid rgba(255,255,255,.08);font-size:1.05rem}
 }
 @media(max-width:480px){.nav .logo span{display:none}.btn-wpp{padding:10px 14px !important;font-size:.85rem !important}.btn-menu{padding:9px 10px}}
+.obras-novas{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:34px}
+.obra-card{margin:0;border-radius:18px;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.35);transition:transform .4s;background:#0d1b2a}
+.obra-card:hover{transform:translateY(-4px)}
+.obra-card img{width:100%;height:auto;display:block}
+@media(max-width:960px){.obras-novas{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.obras-novas{grid-template-columns:1fr;gap:16px}}
 </style>
 </head>
 <body>
@@ -453,11 +459,8 @@ function simular(){
   <div class="container">
     <span class="tag">Obras reais</span>
     <h2 class="h2">Feito pela equipe Insolar</h2>
-    <p class="sub">Projetos entregues em Ilhéus, Itabuna e região — tudo instalado pela nossa equipe.</p>
-    <div class="galeria">
-      <div class="gitem"><img src="img/foto-f032b878.jpg" alt="Obra residencial"><div class="gcap">🏠 Residencial — Ilhéus/BA</div></div>
-      <div class="gitem"><img src="img/foto-c98e4fd1.jpg" alt="Obra comercial" id="img-obra2"><div class="gcap">🏪 Comercial — Itabuna/BA</div></div>
-    </div>
+    <p class="sub">Usinas de solo e telhados de grande porte em Salvador, Ilhéus, Gandu, Jequié e Maraú — tudo instalado pela nossa equipe.</p>
+    <div class="obras-novas"><figure class="obra-card"><img src="img/obras-reais/obra-salvador-telhado-metalico.jpg" alt="Usina solar em telhado metálico de grande porte em Salvador/BA" width="1600" height="1000" loading="lazy"></figure><figure class="obra-card"><img src="img/obras-reais/obra-gandu-telhado-metalico.jpg" alt="Usina solar em telhado metálico em Gandu/BA" width="1600" height="1000" loading="lazy"></figure><figure class="obra-card"><img src="img/obras-reais/obra-marau-usina-solo.jpg" alt="Usina solar de solo em Maraú/BA" width="1600" height="1000" loading="lazy"></figure><figure class="obra-card"><img src="img/obras-reais/obra-jequie-solo-eucalipto.jpg" alt="Usina solar de solo com estaca de eucalipto em Jequié/BA" width="1600" height="1000" loading="lazy"></figure><figure class="obra-card"><img src="img/obras-reais/obra-ilheus-metalico-aerea.jpg" alt="Vista aérea de usina solar em telhado metálico em Ilhéus/BA" width="1600" height="1000" loading="lazy"></figure><figure class="obra-card"><img src="img/obras-reais/obra-ilheus-residencial-aerea.jpg" alt="Vista aérea de residência com energia solar em Ilhéus/BA" width="1600" height="1000" loading="lazy"></figure></div>
     <div style="text-align:center;margin-top:32px"><a class="btn-ghost" href="obras.html">Ver todas as obras →</a></div>
   </div>
 </section>
