@@ -7,11 +7,16 @@
 - Baterias para energia solar e upgrade de sistema on-grid para híbrido (energia à noite e proteção contra apagões).
 - Zero Grid e armazenamento de energia (BESS) para empresas.
 - Carregadores para carro elétrico e motos elétricas.
-- Serviços para quem já tem energia solar: limpeza de placas, inspeção, diagnóstico, homologação e troca de titularidade.
+- Serviços para quem já tem energia solar (também em sistemas de outras empresas): lavagem de placas, manutenção, reparo, visita de diagnóstico, inspeção com laudo fotográfico, laudo técnico de desempenho e reconexão do monitoramento.
+- Rede elétrica e Coelba: troca do padrão de entrada, pedido de ligação, homologação, troca de titularidade e extensão de rede.
+- Projetos elétricos residenciais, comerciais, industriais, prediais e rurais.
+- Insolar Casa Inteligente: luzes, ar-condicionado, portões e fechaduras por comando de voz e celular, junto com energia solar e bateria.
+- Para outras empresas: instalação para integradoras e homologação para terceiros.
+- Os preços de cada serviço são passados no orçamento, de acordo com cada caso.
 
 ## Como funciona a compra
 - O equipamento é comprado direto de grandes distribuidores nacionais, com nota fiscal no nome do cliente; a Insolar cuida do projeto, da homologação e da instalação.
-- Formas de pagamento: Pix, cartão em 12x sem juros (conforme o limite) ou financiamento em até 120x, sujeito à aprovação de crédito.
+- Formas de pagamento: Pix, cartão em até 12x (conforme o limite) ou financiamento em até 120x, sujeito à aprovação de crédito.
 - O retorno do investimento é, em média, de 3 a 5 anos, conforme a simulação de cada caso; as placas têm garantia de 25 anos do fabricante.
 
 ## Cidades atendidas
@@ -23,6 +28,8 @@ Ilhéus, Itabuna, Uruçuca, Itacaré, Serra Grande, Olivença, Una, Canavieiras,
 - [Baterias](https://insolarbrasil.com.br/baterias.html)
 - [Zero Grid para empresas](https://insolarbrasil.com.br/zero-grid.html)
 - [Mobilidade elétrica](https://insolarbrasil.com.br/mobilidade.html)
+- [Todos os serviços](https://insolarbrasil.com.br/servicos.html)
+- [Insolar Casa Inteligente](https://insolarbrasil.com.br/casa-inteligente.html)
 - [Obras reais](https://insolarbrasil.com.br/obras.html)
 - [Contato e pedido de simulação](https://insolarbrasil.com.br/contato.html)
 
