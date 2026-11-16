@@ -1,0 +1,66 @@
+/* Insolar Brasil — partes comuns novas (16/11/2026): título das páginas, faixa de confiança,
+   avaliações do Google e formulário em 2 passos. Usado por todas as páginas. */
+
+/* Título principal das páginas internas (lido pelo Google) */
+/* Celular: número grande do topo não pode passar da tela (corrige "WhatsApp" cortado na página Contato) */
+@media(max-width:620px){.hero-inner>div{min-width:0}.hero-num{font-size:clamp(2.8rem,15vw,4.5rem) !important;overflow-wrap:anywhere}}
+.hero-h1{font-size:clamp(1.05rem,2.2vw,1.45rem);font-weight:800;line-height:1.25;color:#fff;margin:14px 0 8px;letter-spacing:-.01em}
+
+/* Faixa de confiança logo abaixo da primeira tela */
+section.faixa-confianca{padding:0 !important;min-height:0 !important}
+.faixa-confianca{background:#071634;border-top:1px solid rgba(249,185,30,.25);border-bottom:1px solid rgba(249,185,30,.25)}
+.faixa-confianca .fc-lista{list-style:none;margin:0 auto;padding:16px 22px;max-width:1200px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px 28px}
+.faixa-confianca li{display:flex;align-items:center;gap:8px;color:#E8EEF8;font-weight:700;font-size:.95rem;white-space:nowrap}
+.faixa-confianca li b{color:#F9B91E}
+.faixa-confianca .fc-estrelas{color:#F9B91E;letter-spacing:1px}
+.faixa-confianca a{color:inherit;text-decoration:none;display:flex;align-items:center;gap:8px}
+.faixa-confianca a:hover{text-decoration:underline}
+@media(max-width:620px){.faixa-confianca .fc-lista{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;padding:14px 16px}.faixa-confianca li{white-space:normal;font-size:.85rem;line-height:1.25}}
+
+/* Aviso de privacidade no rodapé */
+.aviso-privacidade{max-width:900px;margin:18px auto 0;padding:0 22px;text-align:center;font-size:.78rem;line-height:1.45;color:#8FA3C2}
+
+/* Avaliações reais do Google */
+.avaliacoes{padding:70px 0}
+.avaliacoes .container{padding-left:22px;padding-right:22px}
+.av-topo{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
+.av-nota{display:flex;align-items:center;gap:14px;background:rgba(249,185,30,.08);border:1px solid rgba(249,185,30,.35);border-radius:18px;padding:12px 18px}
+.av-nota .n{font-size:2.2rem;font-weight:900;color:#F9B91E;line-height:1}
+.av-nota .e{color:#F9B91E;font-size:1.1rem;letter-spacing:2px}
+.av-nota small{display:block;color:#C9D6EA;font-weight:600}
+.av-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.av-card{background:var(--superficie,#0E2A5E);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.av-card .e{color:#F9B91E;letter-spacing:2px}
+.av-card blockquote{margin:0;color:#E8EEF8;font-size:1rem;line-height:1.5}
+.av-card .quem{margin-top:auto;color:#C9D6EA;font-size:.88rem;font-weight:700}
+.av-card .quem span{color:#8FA3C2;font-weight:500}
+.av-rodape{text-align:center;margin-top:26px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+@media(max-width:900px){.av-grade{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.av-grade{grid-template-columns:1fr}.av-card{padding:18px}}
+
+/* Formulário em 2 passos */
+.form-sec{padding:70px 0}
+.form-sec .container{padding-left:22px;padding-right:22px}
+.form-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:start}
+.form-lead{background:var(--superficie,#0E2A5E);border:1px solid rgba(249,185,30,.3);border-radius:24px;padding:30px;display:grid;grid-template-columns:1fr 1fr;gap:14px 16px;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.form-lead label{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.9rem;color:#fff}
+.form-lead input[type=text],.form-lead input[type=tel],.form-lead input[type=email],.form-lead select,.form-lead textarea{background:#071634;border:2px solid rgba(255,255,255,.14);border-radius:12px;padding:12px 14px;color:#fff;font-family:inherit;font-size:1rem;outline:none;width:100%}
+.form-lead input:focus,.form-lead select:focus,.form-lead textarea:focus{border-color:#F9B91E}
+.form-lead .arquivo,.form-lead label:has(textarea),.form-lead .aceite,.form-lead button,.form-lead .form-obs,.form-lead .col-toda{grid-column:1/-1}
+.form-lead .arquivo{background:rgba(249,185,30,.08);border:2px dashed rgba(249,185,30,.5);border-radius:14px;padding:14px}
+.form-lead .aceite{flex-direction:row;align-items:flex-start;gap:10px;font-weight:500;color:#C9D6EA;font-size:.85rem}
+.form-lead .aceite input{margin-top:3px;width:18px;height:18px;flex:0 0 18px}
+.form-lead button{border:0;cursor:pointer;font-size:1.05rem;justify-content:center;width:100%}
+.form-obs{color:#C9D6EA;font-size:.88rem;text-align:center;margin:0}.form-obs a{color:#F9B91E;font-weight:700}
+.arq-oculto{position:absolute;opacity:0;width:1px;height:1px}
+.arq-botao{display:inline-block;align-self:flex-start;background:#F9B91E;color:#071634;font-weight:800;border-radius:50px;padding:10px 18px;cursor:pointer}
+.arq-nome{color:#C9D6EA;font-weight:500;font-size:.85rem;word-break:break-all}
+.pote{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+.passo{display:contents}
+.passo[hidden]{display:none}
+.passos-topo{grid-column:1/-1;display:flex;gap:8px;margin-bottom:4px}
+.passos-topo span{flex:1;text-align:center;font-size:.8rem;font-weight:800;color:#8FA3C2;border-bottom:3px solid rgba(255,255,255,.12);padding-bottom:8px}
+.passos-topo span.ativo{color:#F9B91E;border-color:#F9B91E}
+.form-lead .btn-voltar{background:none;border:0;color:#C9D6EA;font-weight:700;text-decoration:underline;cursor:pointer;font-size:.9rem;padding:4px}
+.form-lead .ola{grid-column:1/-1;margin:0;color:#E8EEF8;font-weight:700}
+@media(max-width:860px){.form-grid{grid-template-columns:1fr}.form-lead{grid-template-columns:1fr;padding:22px}}

@@ -26,6 +26,8 @@ PROIBIDAS = {
     r'\bproblema': 'palavra proibida nas artes e textos',
     r'99183-?3607': 'telefone que nunca pode aparecer',
     r'voltar ao mercado|de volta ao mercado': 'frase proibida',
+    r'\bminutos\b|em 1 dia|pronta entrega': 'prazo proibido (prazo só no atendimento)',
+    r'\breduz\w*|economiz\w* at[ée]': 'promessa de economia (sem reduzir custo/conta)',
     r'R\$\s?\d': 'preço de serviço não aparece no site (só a seção Black, que sai sozinha)',
 }
 # Trechos onde preço é permitido (cards da Black aprovados pelo jurídico, somem sozinhos)
@@ -105,6 +107,13 @@ for nome in PAGINAS:
                     continue
             erros.append(f'{nome}: "{achado.group(0)}" -> {motivo}')
             break
+
+    # 5b) Um título principal (h1) por página
+    if len(re.findall(r'<h1\b', t)) != 1:
+        erros.append(f'{nome}: precisa ter exatamente 1 título principal (h1)')
+    tit = re.search(r'<title>(.*?)</title>', t)
+    if tit and len(html.unescape(tit.group(1))) > 62 and nome != 'obrigado.html':
+        avisos.append(f'{nome}: título com mais de 60 letras (o Google corta)')
 
     # 6) Contato obrigatório
     if '(73) 3223-5102' not in t:

@@ -59,6 +59,8 @@ $tipo     = limpo($_POST['tipo'] ?? '', 60);
 $valor    = limpo($_POST['valor'] ?? '', 12);
 $mensagem = trim(mb_substr(str_replace("\0", '', (string)($_POST['mensagem'] ?? '')), 0, 800, 'UTF-8'));
 $aceite   = ($_POST['aceite'] ?? '') === 'sim';
+$origem   = limpo($_POST['origem'] ?? '', 40);
+if ($origem === '') $origem = 'Contato';
 
 $digitos = preg_replace('/\D/', '', $telefone);
 if ($nome === '' || $cidade === '' || $tipo === '') voltar_erro('Preencha nome, cidade e para que é o sistema.');
@@ -98,8 +100,8 @@ if (strlen($digitos) > 11 && substr($digitos, 0, 2) === '55') $wa = 'https://wa.
 $csv = $PASTA . '/contatos.csv';
 $novo = !is_file($csv);
 if ($fp = @fopen($csv, 'a')) {
-    if ($novo) { fwrite($fp, "\xEF\xBB\xBF"); fputcsv($fp, ['Data', 'Nome', 'WhatsApp', 'E-mail', 'Cidade', 'Tipo', 'Conta (R$)', 'Mensagem', 'Arquivo da conta'], ';'); }
-    fputcsv($fp, [$quando, $nome, $telefone, $email, $cidade, $tipo, $valor, $mensagem, $anexo['nome'] ?? ''], ';');
+    if ($novo) { fwrite($fp, "\xEF\xBB\xBF"); fputcsv($fp, ['Data', 'Nome', 'WhatsApp', 'E-mail', 'Cidade', 'Tipo', 'Conta (R$)', 'Mensagem', 'Arquivo da conta', 'Página do site'], ';'); }
+    fputcsv($fp, [$quando, $nome, $telefone, $email, $cidade, $tipo, $valor, $mensagem, $anexo['nome'] ?? '', $origem], ';');
     fclose($fp);
 }
 
@@ -110,6 +112,7 @@ $texto .= "Data: $quando\nNome: $nome\nWhatsApp: $telefone\nResponder no WhatsAp
 $texto .= "E-mail: " . ($email ?: '—') . "\nCidade: $cidade\nO sistema é para: $tipo\n";
 $texto .= "Valor médio da conta: " . ($valor !== '' ? "R$ $valor" : '—') . "\n";
 $texto .= "Conta de luz anexada: " . ($anexo ? 'sim' : 'não') . "\n\nMensagem:\n" . ($mensagem ?: '—') . "\n\n";
+$texto .= "Origem: Site (página $origem)\n";
 $texto .= "Cliente autorizou o contato. Responder em até 1 hora.\n";
 
 $sep = 'insolar_' . md5(uniqid('', true));
