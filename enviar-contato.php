@@ -135,6 +135,61 @@ $enviado = false;
 try { $enviado = enviar_smtp($REMETENTE, $destinos, $cabTudo, $corpo); } catch (Throwable $e) { $enviado = false; }
 if (!$enviado) @file_put_contents($PASTA . '/falhas-de-envio.txt', "$quando - $nome - $telefone\n", FILE_APPEND);
 
+// ---------------------------------------------------------------------------
+// PIPEDRIVE (16/11/2026): o pedido entra sozinho no funil "Vendas - Energia Solar",
+// etapa "Novo contato", com a origem "Site". Vem DEPOIS do e-mail e da planilha.
+// A chave fica FORA do site, em /home/insola57/contatos-site/pipedrive-config.php.
+// Sem chave ou com qualquer falha: o cliente não percebe nada; só anota a falha.
+// ---------------------------------------------------------------------------
+$PD_FUNIL = 1; $PD_ETAPA = 1; $PD_DONO = 28978787;
+$PD_CAMPO_ORIGEM = '75ab974e99f659c02f1e885103996d38a1192f48'; $PD_ORIGEM_SITE = 42;
+
+function pd_registro($pasta, $quando, $nome, $msg) {
+    @file_put_contents($pasta . '/falhas-pipedrive.txt', "$quando - $nome - $msg\n", FILE_APPEND);
+}
+function pd_post($token, $caminho, array $dados) {
+    $url = 'https://api.pipedrive.com/v1/' . $caminho;
+    $json = json_encode($dados, JSON_UNESCAPED_UNICODE);
+    $cab = ['Content-Type: application/json', 'Accept: application/json', 'x-api-token: ' . $token];
+    if (function_exists('curl_init')) {
+        $c = curl_init($url);
+        curl_setopt_array($c, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => $json, CURLOPT_HTTPHEADER => $cab,
+            CURLOPT_RETURNTRANSFER => true, CURLOPT_CONNECTTIMEOUT => 4, CURLOPT_TIMEOUT => 8]);
+        $r = curl_exec($c); $cod = (int)curl_getinfo($c, CURLINFO_HTTP_CODE); curl_close($c);
+    } else {
+        $ctx = stream_context_create(['http' => ['method' => 'POST', 'header' => implode("\r\n", $cab), 'content' => $json, 'timeout' => 8, 'ignore_errors' => true]]);
+        $r = @file_get_contents($url, false, $ctx); $cod = 0;
+        if (isset($http_response_header[0]) && preg_match('/\s(\d{3})\s/', $http_response_header[0], $m)) $cod = (int)$m[1];
+    }
+    $j = $r ? json_decode($r, true) : null;
+    if ($cod < 200 || $cod >= 300 || empty($j['success'])) throw new Exception("$caminho respondeu $cod");
+    return $j['data'];
+}
+try {
+    $PD_TOKEN = '';
+    $cfg = $PASTA . '/pipedrive-config.php';
+    if (is_file($cfg)) { include $cfg; if (defined('PIPEDRIVE_TOKEN')) $PD_TOKEN = trim((string)PIPEDRIVE_TOKEN); }
+    if ($PD_TOKEN === '') {
+        pd_registro($PASTA, $quando, $nome, 'chave do Pipedrive vazia: pedido não lançado (está no e-mail e na planilha)');
+    } else {
+        $pessoa = ['name' => $nome, 'owner_id' => $PD_DONO, 'phone' => [['value' => $telefone, 'primary' => true, 'label' => 'mobile']]];
+        if ($email !== '') $pessoa['email'] = [['value' => $email, 'primary' => true, 'label' => 'work']];
+        $p = pd_post($PD_TOKEN, 'persons', $pessoa);
+        $d = pd_post($PD_TOKEN, 'deals', ['title' => "Site – $nome – $cidade", 'person_id' => $p['id'], 'pipeline_id' => $PD_FUNIL,
+            'stage_id' => $PD_ETAPA, 'user_id' => $PD_DONO, 'currency' => 'BRL', $PD_CAMPO_ORIGEM => $PD_ORIGEM_SITE]);
+        $nota  = "Pedido pelo site insolarbrasil.com.br ($quando)<br>";
+        $nota .= "Página do site: " . htmlspecialchars($origem) . "<br>";
+        $nota .= "O sistema é para: " . htmlspecialchars($tipo) . "<br>";
+        $nota .= "Valor médio da conta: " . ($valor !== '' ? 'R$ ' . htmlspecialchars($valor) : '—') . "<br>";
+        $nota .= "Mandou a conta de luz: " . ($anexo ? 'sim (está no e-mail comercial@ e na pasta contatos-site)' : 'não') . "<br>";
+        $nota .= "Cidade: " . htmlspecialchars($cidade) . "<br>WhatsApp: " . htmlspecialchars($telefone) . "<br>";
+        $nota .= "Mensagem: " . ($mensagem !== '' ? nl2br(htmlspecialchars($mensagem)) : '—');
+        pd_post($PD_TOKEN, 'notes', ['content' => $nota, 'deal_id' => $d['id']]);
+    }
+} catch (Throwable $e) {
+    pd_registro($PASTA, $quando, $nome, 'Pipedrive falhou: ' . $e->getMessage());
+}
+
 $primeiro = rawurlencode(strtok($nome, ' '));
 header("Location: obrigado.html?n=$primeiro", true, 303);
 exit;
